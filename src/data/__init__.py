@@ -1,14 +1,18 @@
 from .config import DATABASE_URLS
-from .database_loadbalancer import DatabaseLoadBalancer
+from .loadbalancer import LoadBalancer
 from . import models
 from .repository import TodoItemRepository
+from .database import DatabaseWrapper
 
-db_load_balancer = DatabaseLoadBalancer(DATABASE_URLS)
-db_load_balancer.migrate(models.todo_item)
+db_load_balancer = LoadBalancer()
 
-sessionmaker = db_load_balancer.get_session_makers()
-todo_repository = TodoItemRepository(sm=sessionmaker)
+for idx, url in enumerate(DATABASE_URLS):
+    database = DatabaseWrapper(conn_str=url, id=f'database{idx+1}')
+    database.migrate(models.todo_item)
+    db_load_balancer.register(database)
 
+databases = db_load_balancer.get_dbs()
+todo_repository = [TodoItemRepository(dbw=dbw) for dbw in databases]
 
 __all__ = [
     'db_load_balancer',

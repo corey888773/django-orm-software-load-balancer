@@ -1,15 +1,17 @@
-
 from typing import Type, Dict
 import abc
+from dataclasses import dataclass
+from .abstractions import CommandInterface, CommandHandlerInterface
+from ..abstractions import TodoItemRepositoryInterface, UnitOfWorkInterface
+from ..models.todo_item import TodoItem
 
-class CommandInterface(metaclass=abc.ABCMeta):
-    raise NotImplementedError
-
+@dataclass
 class CreateTodoItemCommand(CommandInterface):
     title: str
     description: str
     completed: bool
 
+@dataclass
 class UpdateTodoItemCommand(CommandInterface):
     id: int
     title: str
@@ -18,12 +20,6 @@ class UpdateTodoItemCommand(CommandInterface):
 
 class DeleteTodoItemCommand(CommandInterface):
     id: int
-
-class CommandHandlerInterface(metaclass=abc.ABCMeta):
-    @abc.abstractmethod
-    def handle(self, command: CommandInterface):
-        raise NotImplementedError
-
 
 class CreateTodoItemCommandHandler(CommandHandlerInterface):
     def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
@@ -72,7 +68,3 @@ class CommandsMediator:
     def execute(self, command: CommandInterface):
         return self.handlers[command].handle(command)
 
-commands_mediator = CommandsMediator()
-commands_mediator.register(CreateTodoItemCommand, CreateTodoItemCommandHandler(repository=todoItemRepository, unitOfWork=unitOfWork))
-commands_mediator.register(UpdateTodoItemCommand, UpdateTodoItemCommandHandler(repository=todoItemRepository, unitOfWork=unitOfWork))
-commands_mediator.register(DeleteTodoItemCommand, DeleteTodoItemCommandHandler(repository=todoItemRepository, unitOfWork=unitOfWork))

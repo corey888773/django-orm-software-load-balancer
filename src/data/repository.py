@@ -3,55 +3,27 @@ from schemas import TodoItemSchema, RequestTodoItem, Response
 from typing import List, Type
 import abc
 from sqlalchemy.orm.session import sessionmaker
-from contextlib import contextmanager
+from .loadbalancer import LoadBalancer
+from .database import DatabaseWrapper
+from .events import *
+from .abstractions import TodoItemRepositoryInterface
 
 from .models.todo_item import TodoItem
 
-class TodoItemRepositoryInterface(metaclass=abc.ABCMeta):
-    @abc.abstractmethod
-    def list_todo_items(self, db: Session) -> list[Type[TodoItem]]:
-        pass
-
-    @abc.abstractmethod
-    def get_todo_item_by_id(self, db: Session, id: int) -> TodoItem:
-        pass
-
-    @abc.abstractmethod
-    def create_todo_item(self, db: Session, todo_item: RequestTodoItem) -> TodoItem:
-        pass
-
-    @abc.abstractmethod
-    def update_todo_item(self, db: Session, id: int, todo_item: RequestTodoItem) -> TodoItem:
-        pass
-
-    @abc.abstractmethod
-    def delete_todo_item(self, db: Session, id: int) -> Response:
-        pass
-
-
 class TodoItemRepository(TodoItemRepositoryInterface):
-    def __init__(self, sm: sessionmaker):
-        self.sessionmaker = sm
-
-    @contextmanager
-    def make_session(self):
-        ss = self.sessionmaker()
-        try :
-            yield ss
-
-        finally:
-            ss.close()
+    def __init__(self, dbw: DatabaseWrapper):
+        self.db_wrapper = dbw
 
     def list_todo_items(self) -> list[Type[TodoItem]]:
-        with self.make_session() as db:
+        with self.db_wrapper.make_session() as db:
             return db.query(TodoItem).all()
 
     def get_todo_item_by_id(self, id: int) -> TodoItem:
-        with self.make_session() as db:
+        with self.db_wrapper.make_session() as db:
             return db.query(TodoItem).filter(TodoItem.id == id).first()
 
     def create_todo_item(self, todo_item: RequestTodoItem) -> TodoItem:
-        with self.make_session() as db:
+        with self.db_wrapper.make_session() as db:
             _todo_item = TodoItem(title=todo_item.parameter.title, description=todo_item.parameter.description, completed=todo_item.parameter.completed)
             db.add(_todo_item)
             db.commit()
@@ -59,7 +31,7 @@ class TodoItemRepository(TodoItemRepositoryInterface):
             return _todo_item
 
     def update_todo_item(self, id: int, todo_item: RequestTodoItem) -> TodoItem: 
-        with self.make_session() as db:
+        with self.db_wrapper.make_session() as db:
             _todo_item = db.query(TodoItem).filter(TodoItem.id == id).first()
             _todo_item.title = todo_item.parameter.title
             _todo_item.description = todo_item.parameter.description
@@ -69,8 +41,64 @@ class TodoItemRepository(TodoItemRepositoryInterface):
             return _todo_item
 
     def delete_todo_item(self, id: int) -> Response:
-        with self.make_session() as db:
+        with self.db_wrapper.make_session() as db:
             _todo_item = db.query(TodoItem).filter(TodoItem.id == id).first()
             db.delete(_todo_item)
             db.commit()
             return Response(code="200", status="OK", message="Todo Item Deleted", result=None)
+
+
+class EventsTodoItemRepository(TodoItemRepositoryInterface):
+    def __init__(self, dbw: DatabaseWrapper):
+        self.db_wrapper = dbw
+
+    def list_todo_items(self) -> list[Type[TodoItem]]:
+        pass
+
+    def get_todo_item_by_id(self, id: int) -> TodoItem:
+        pass
+
+    def create_todo_item(self, todo_item: RequestTodoItem) -> TodoItem:
+        event = TodoItemCreatedEvent(title=todo_item.parameter.title, description=todo_item.parameter.description, completed=todo_item.parameter.completed)
+        self.db_wrapper.register_event(event)
+
+        if self.db_wrapper.is_connected():
+            self.db_wrapper.commit_events()
+
+
+    def update_todo_item(self, id: int, todo_item: RequestTodoItem) -> TodoItem:
+        pass
+
+    def delete_todo_item(self, id: int) -> Response:
+        pass
+
+
+class LbTodoItemRepository(TodoItemRepositoryInterface):
+    def __init__(self, rps: List[TodoItemRepositoryInterface], lb : LoadBalancer):
+        self.repostories = rps
+        self.loadbalancer = lb
+
+    def list_todo_items(self) -> list[Type[TodoItem]]:
+        random = random.randint(0, len(self.repostories) - 1)
+
+        return self.repostories[random].list_todo_items()
+
+    def get_todo_item_by_id(self, id: int) -> TodoItem:
+        random = random.randint(0, len(self.repostories) - 1)
+
+        return self.repostories[random].get_todo_item_by_id(id=id)
+
+    def create_todo_item(self, todo_item: RequestTodoItem) -> TodoItem:
+        random = random.randint(0, len(self.repostories) - 1)
+
+        return self.repostories[random].create_todo_item(todo_item=todo_item)
+
+    def update_todo_item(self, id: int, todo_item: RequestTodoItem) -> TodoItem:
+        random = random.randint(0, len(self.repostories) - 1)
+
+        return self.repostories[random].update_todo_item(id=id, todo_item=todo_item)
+
+    def delete_todo_item(self, id: int) -> Response:
+        random = random.randint(0, len(self.repostories) - 1)
+
+        return self.repostories[random].delete_todo_item(id=id)
