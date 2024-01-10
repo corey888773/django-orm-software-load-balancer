@@ -24,8 +24,9 @@ class RequestTodoItem(BaseModel):
 
 
 class Response(GenericModel, Generic[T]):
-    def __init__(self, code: int, status: str, message: Optional[str] = None, result: Optional[T] = None):
-        code: str
-        status: str
-        message: str
-        result: Optional[T]
+    code: str
+    status: str
+    message: str
+    result: Optional[T]
+
+    

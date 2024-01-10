@@ -7,5 +7,6 @@ DATABASE_URLS =[
     # "postgresql://postgres:postgres@db2:5432/todo"
 ]
 
+
 Base = declarative_base()
 
