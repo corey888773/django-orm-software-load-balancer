@@ -1,0 +1,50 @@
+version: '3.9'
+networks:
+    fastapi-network:
+        driver: bridge
+
+services: 
+  db1:
+    container_name: db1
+    hostname: db1
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=todo
+    ports:
+      - '5432:5432'
+    volumes:
+        - ./postgres/data/db1:/var/lib/postgresql/data
+    networks:
+        - fastapi-network
+
+  db2:
+    container_name: db2
+    hostname: db2
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=todo
+    ports:
+      - '5433:5432'
+    volumes:
+        - ./postgres/data/db2:/var/lib/postgresql/data
+    networks:
+        - fastapi-network
+        
+  web:
+    container_name: web
+    build: .
+    volumes:
+      - .:/code
+    ports:
+      - '8000:8000'
+    networks:
+      - fastapi-network
+    restart: always
+    depends_on:
+      - db1
+    links:
+      - db1
