@@ -1,5 +1,7 @@
+import abc
+
 class CommandInterface(metaclass=abc.ABCMeta):
-    raise NotImplementedError
+    pass
 
 
 class CommandHandlerInterface(metaclass=abc.ABCMeta):
@@ -8,10 +10,10 @@ class CommandHandlerInterface(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
 
-class QuerryInterface(metaclass=abc.ABCMeta):
+class QueryInterface(metaclass=abc.ABCMeta):
     pass
 
-class QuerryHandlerInterface(metaclass=abc.ABCMeta):
+class QueryHandlerInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def handle(self, querry: QuerryInterface):
+    def handle(self, query: QueryInterface):
         raise NotImplementedError

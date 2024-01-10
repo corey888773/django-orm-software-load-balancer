@@ -2,11 +2,13 @@ import abc
 from dataclasses import dataclass
 from .abstractions import TodoItemRepositoryInterface, UnitOfWorkInterface, EventInterface, EventHandlerInterface
 
+
 @dataclass
 class TodoItemCreatedEvent(EventInterface):
     title: str
     description: str
     completed: bool
+
 
 @dataclass
 class TodoItemUpdatedEvent(EventInterface):
@@ -14,6 +16,7 @@ class TodoItemUpdatedEvent(EventInterface):
     title: str
     description: str
     completed: bool
+
 
 @dataclass
 class TodoItemDeletedEvent(EventInterface):
@@ -31,6 +34,7 @@ class TodoItemCreatedEventHandler(EventHandlerInterface):
         self.unitOfWork.commit()
         return _todo_item
 
+
 class TodoItemUpdatedEventHandler(EventHandlerInterface):
     def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
         self.repository = repository
@@ -45,6 +49,7 @@ class TodoItemUpdatedEventHandler(EventHandlerInterface):
         self.unitOfWork.commit()
         return _todo_item
 
+
 class TodoItemDeletedEventHandler(EventHandlerInterface):
     def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
         self.repository = repository
@@ -55,6 +60,7 @@ class TodoItemDeletedEventHandler(EventHandlerInterface):
         self.repository.delete_todo_item(_todo_item)
         self.unitOfWork.commit()
         return _todo_item
+
 
 # design pattern: mediator
 class EventsMediator:

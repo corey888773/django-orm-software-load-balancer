@@ -1,4 +1,6 @@
 import abc
+from sqlalchemy.orm import Session
+from .abstractions import UnitOfWorkInterface
 
 class UnitOfWork(UnitOfWorkInterface):
     def __init__(self, session):

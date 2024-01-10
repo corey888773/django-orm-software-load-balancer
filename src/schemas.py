@@ -1,9 +1,9 @@
 from typing import Optional, Generic, TypeVar
 from pydantic import BaseModel, Field
 from pydantic.generics import GenericModel
+from dataclasses import dataclass
 
 T = TypeVar('T')
-
 
 class TodoItemSchema(BaseModel):
     id: Optional[int] = None
