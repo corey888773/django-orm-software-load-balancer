@@ -8,30 +8,30 @@ router = APIRouter()
 @router.post('/')
 async def create_todo_item(request: RequestTodoItem):
     create_todo_item_command = CreateTodoItemCommand(title=request.parameter.title, description=request.parameter.description, completed=request.parameter.completed)
-    await commands_mediator.execute(create_todo_item_command)
+    await commands_invoker.execute(create_todo_item_command)
     return Response(code="200", status="OK", message="Todo Item Created", result=None).dict(exclude_none=True)
 
 @router.get('/')
 async def list_todo_items():
     list_todo_items_query = ListTodoItemsQuery()
-    _books = await queries_mediator.execute(list_todo_items_query)
+    _books = await queries_invoker.execute(list_todo_items_query)
     return Response(code="200", status="OK", message="Todo Items Retrieved", result=_books).dict(exclude_none=True)
 
 @router.get('/{id}')
 async def get_todo_item_by_id(id: int):
     get_todo_item_by_id_query = GetTodoItemByIdQuery(id=id)
-    _book = await queries_mediator.execute(get_todo_item_by_id_query)
+    _book = await queries_invoker.execute(get_todo_item_by_id_query)
     return Response(code="200", status="OK", message="Todo Item Retrieved", result=_book).dict(exclude_none=True)
 
 @router.delete('/{id}')
 async def delete_todo_item(id: int):
     delete_todo_item_command = DeleteTodoItemCommand(id=id)
-    await commands_mediator.execute(delete_todo_item_command)
+    await commands_invoker.execute(delete_todo_item_command)
     return Response(code="200", status="OK", message="Todo Item Deleted", result=None).dict(exclude_none=True)
 
 @router.put('/{id}')
 async def update_todo_item(id: int, request: RequestTodoItem):
     update_todo_item_command = UpdateTodoItemCommand(id=id, title=request.parameter.title, description=request.parameter.description, completed=request.parameter.completed)
-    await commands_mediator.execute(update_todo_item_command)
+    await commands_invoker.execute(update_todo_item_command)
     return Response(code="200", status="OK", message="Todo Item Updated", result=None).dict(exclude_none=True)
 

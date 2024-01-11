@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
+# from .abstractions import DatabaseGeneralInterface, DatabaseEventsInterface
 
 class DatabaseWrapper:
     def __init__(self, conn_str: str, id: str):
@@ -11,24 +12,29 @@ class DatabaseWrapper:
         })
         self.sessionmaker = sessionmaker(bind=self.engine, autocommit=False, autoflush=False)
         self.event_queue = []
-        self._events_mediator = None
-
-    @property
-    def events_mediator(self):
-        return self._events_mediator
-
-    @events_mediator.setter
-    def events_mediator(self, value):
-        self._events_mediator = value
+        self._events_dispatcher = None
 
     def migrate(self, model):
         model.Base.metadata.create_all(bind=self.engine)
 
-    def get_session_maker(self):
-        return self.sessionmaker
+    @contextmanager
+    def make_session(self):
+        session = self.sessionmaker()
+        try:
+            yield session
+        finally:
+            session.close()
 
     def get_id(self):
         return self.id
+
+    @property
+    def events_dispatcher(self):
+        return self._events_dispatcher
+
+    @events_dispatcher.setter
+    def events_dispatcher(self, value):
+        self._events_dispatcher = value
 
     def register_event(self, event):
         self.event_queue.append(event)
@@ -50,19 +56,12 @@ class DatabaseWrapper:
         while not self.is_synced():
             try:
                 event = self.event_queue.pop(0)
-                print(f'Publishing event {event}')
-                await self.events_mediator.handle(event)
-                print(f'Event {event} published')
-            except Exception as e:
-                print(f'Error publishing event {e}')
-                break
+                result = await self.events_dispatcher.handle(event)
+                print(f'Event {event} published with result {result.__dict__}')
 
-    @contextmanager
-    def make_session(self):
-        session = self.sessionmaker()
-        try:
-            yield session
-        finally:
-            session.close()
+                # there might be a better way to handle errors like for example retrying, catching specific errors, etc.
+            except Exception as ex:  
+                print(f'Error publishing event {ex}')
+                break
 
 

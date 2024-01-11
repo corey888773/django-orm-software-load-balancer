@@ -1,6 +1,5 @@
 import abc
-from ..abstractions import UnitOfWorkInterface
-from ..repository.abstractions import ReadRepositoryInterface, WriteRepositoryInterface
+from ..repository.abstractions import ReadRepositoryInterface, WriteRepositoryInterface, UnitOfWorkInterface
 
 class EventInterface(metaclass=abc.ABCMeta):
     pass

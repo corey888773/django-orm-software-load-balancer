@@ -24,8 +24,7 @@ class GetTodoItemByIdQueryHandler(QueryHandlerInterface):
     async def handle(self, query: QueryInterface):
         return await self.repository.get_todo_item_by_id(query.id)
 
-# design pattern: mediator
-class QueriesMediator:
+class QueriesInvoker:
     def __init__(self):
         self.query_handlers : Dict[QueryInterface, QueryHandlerInterface] = {}
 
