@@ -3,12 +3,11 @@ from schemas import TodoItemSchema, Response
 from typing import List
 import abc
 from sqlalchemy.orm.session import sessionmaker
-from .database import DatabaseWrapper
-from .abstractions import TodoItemRepositoryInterface
+from ..database import DatabaseWrapper
+from .abstractions import ReadRepositoryInterface, WriteRepositoryInterface
+from ..models.todo_item import TodoItem
 
-from .models.todo_item import TodoItem
-
-class TodoItemRepository(TodoItemRepositoryInterface):
+class DefaultReadRepository(ReadRepositoryInterface):
     def __init__(self, dbw: DatabaseWrapper):
         self.db_wrapper = dbw
 
@@ -19,6 +18,11 @@ class TodoItemRepository(TodoItemRepositoryInterface):
     def get_todo_item_by_id(self, id: int) -> TodoItem:
         with self.db_wrapper.make_session() as db:
             return db.query(TodoItem).filter(TodoItem.id == id).first()
+
+
+class DefaultWriteRepository(WriteRepositoryInterface):
+    def __init__(self, dbw: DatabaseWrapper):
+        self.db_wrapper = dbw
 
     def create_todo_item(self, todo_item: TodoItemSchema) -> TodoItem:
         with self.db_wrapper.make_session() as db:

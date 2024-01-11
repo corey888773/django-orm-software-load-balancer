@@ -1,7 +1,6 @@
 import abc
 from dataclasses import dataclass
-from .abstractions import EventInterface, EventHandlerInterface
-from ..abstractions import TodoItemRepositoryInterface, UnitOfWorkInterface
+from .abstractions import EventInterface, EventHandlerInterface, UnitOfWorkInterface, WriteRepositoryInterface, ReadRepositoryInterface
 from ..models.todo_item import TodoItem
 
 
@@ -33,7 +32,7 @@ class ListTodoItemsEvent(EventInterface):
     pass
 
 class TodoItemCreatedEventHandler(EventHandlerInterface):
-    def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
+    def __init__(self, repository: any, unitOfWork: UnitOfWorkInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork
 
@@ -45,7 +44,7 @@ class TodoItemCreatedEventHandler(EventHandlerInterface):
 
 
 class TodoItemUpdatedEventHandler(EventHandlerInterface):
-    def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
+    def __init__(self, repository: any, unitOfWork: UnitOfWorkInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork
 
@@ -60,7 +59,7 @@ class TodoItemUpdatedEventHandler(EventHandlerInterface):
 
 
 class TodoItemDeletedEventHandler(EventHandlerInterface):
-    def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
+    def __init__(self, repository: any, unitOfWork: UnitOfWorkInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork
 
@@ -72,7 +71,7 @@ class TodoItemDeletedEventHandler(EventHandlerInterface):
 
 
 class GetTodoItemByIdEventHandler(EventHandlerInterface):
-    def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
+    def __init__(self, repository: any, unitOfWork: UnitOfWorkInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork
 
@@ -82,7 +81,7 @@ class GetTodoItemByIdEventHandler(EventHandlerInterface):
 
 
 class ListTodoItemsEventHandler(EventHandlerInterface):
-    def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
+    def __init__(self, repository: any, unitOfWork: UnitOfWorkInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork
 

@@ -59,10 +59,10 @@ class DatabaseWrapper:
 
     @contextmanager
     def make_session(self):
-        ss = self.sessionmaker()
+        session = self.sessionmaker()
         try:
-            yield ss
+            yield session
         finally:
-            ss.close()
+            session.close()
 
 

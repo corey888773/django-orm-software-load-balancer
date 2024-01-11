@@ -1,4 +1,6 @@
 import abc
+from ..repository.abstractions import ReadRepositoryInterface, WriteRepositoryInterface
+from ..abstractions import UnitOfWorkInterface
 
 class CommandInterface(metaclass=abc.ABCMeta):
     pass

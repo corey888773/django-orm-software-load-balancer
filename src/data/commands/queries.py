@@ -1,6 +1,5 @@
 import abc
-from .abstractions import QueryInterface, QueryHandlerInterface
-from ..abstractions import TodoItemRepositoryInterface, UnitOfWorkInterface
+from .abstractions import QueryInterface, QueryHandlerInterface, UnitOfWorkInterface, ReadRepositoryInterface
 from dataclasses import dataclass
 
 @dataclass
@@ -12,19 +11,18 @@ class GetTodoItemByIdQuery(QueryInterface):
     id: int
 
 class ListTodoItemsQueryHandler(QueryHandlerInterface):
-    def __init__(self, repositories: list[TodoItemRepositoryInterface]):
-        self.repositories = repositories
+    def __init__(self, repository: list[ReadRepositoryInterface]):
+        self.repository = repository
 
     def handle(self, query: QueryInterface):
-        return self.repositories[0].list_todo_items()
+        return self.repository.list_todo_items()
 
 class GetTodoItemByIdQueryHandler(QueryHandlerInterface):
-    def __init__(self, repositories: list[TodoItemRepositoryInterface]):
-        self.repositories = repositories
+    def __init__(self, repository: list[ReadRepositoryInterface]):
+        self.repository = repository
 
     def handle(self, query: QueryInterface):
-        return self.repositories[0].get_todo_item_by_id(query.id)
-
+        return self.repository.get_todo_item_by_id(query.id)
 
 # design pattern: mediator
 class QueriesMediator:
