@@ -2,6 +2,7 @@ import abc
 from dataclasses import dataclass
 from .abstractions import EventInterface, EventHandlerInterface
 from ..abstractions import TodoItemRepositoryInterface, UnitOfWorkInterface
+from ..models.todo_item import TodoItem
 
 
 @dataclass
@@ -39,7 +40,7 @@ class TodoItemCreatedEventHandler(EventHandlerInterface):
     def handle(self, event : TodoItemCreatedEvent):
         _todo_item = TodoItem(title=event.title, description=event.description, completed=event.completed)
         self.repository.create_todo_item(_todo_item)
-        self.unitOfWork.commit()
+        # self.unitOfWork.commit()
         return _todo_item
 
 
@@ -54,7 +55,7 @@ class TodoItemUpdatedEventHandler(EventHandlerInterface):
         _todo_item.description = event.description
         _todo_item.completed = event.completed
         self.repository.update_todo_item(_todo_item)
-        self.unitOfWork.commit()
+        # self.unitOfWork.commit()
         return _todo_item
 
 
@@ -66,7 +67,7 @@ class TodoItemDeletedEventHandler(EventHandlerInterface):
     def handle(self, event : TodoItemDeletedEvent):
         _todo_item = self.repository.get_todo_item_by_id(event.id)
         self.repository.delete_todo_item(_todo_item)
-        self.unitOfWork.commit()
+        # self.unitOfWork.commit()
         return _todo_item
 
 
@@ -99,5 +100,4 @@ class EventsMediator:
         self.event_handlers[event] = event_handler
 
     def handle(self, event: EventInterface):
-        event_name = type(event).__name__
-        return self.event_handlers[event_name].handle(event)
+        return self.event_handlers[event.__class__].handle(event)

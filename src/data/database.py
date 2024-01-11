@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 
@@ -34,13 +34,28 @@ class DatabaseWrapper:
         self.event_queue.append(event)
 
     def is_connected(self):
-        return self.engine.test_connection()
+        try:
+            with self.engine.connect() as conn:
+                conn.execute(text('select 1'))
+            print(f'Database {self.id} is connected')
+        except Exception as e:
+            print(f'Database {self.id} is not connected')
+            return False
+        return True
 
     def is_synced(self):
         return len(self.event_queue) == 0
 
     def commit_events(self):
-        pass
+        while not self.is_synced():
+            try:
+                event = self.event_queue.pop(0)
+                print(f'Publishing event {event}')
+                self.events_mediator.handle(event)
+                print(f'Event {event} published')
+            except Exception as e:
+                print(f'Error publishing event {e}')
+                break
 
     @contextmanager
     def make_session(self):

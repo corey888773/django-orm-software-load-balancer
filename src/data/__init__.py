@@ -6,17 +6,6 @@ from .database import DatabaseWrapper
 from .unitofwork import UnitOfWork
 from .events import *
 
-# events
-# events_mediator = EventsMediator()
-# events_mediator.register(TodoItemCreatedEvent, TodoItemCreatedEventHandler(repository=todo_repository, unitOfWork=unit_of_work))
-# events_mediator.register(TodoItemUpdatedEvent, TodoItemUpdatedEventHandler(repository=todo_repository, unitOfWork=unit_of_work))
-# events_mediator.register(TodoItemDeletedEvent, TodoItemDeletedEventHandler(repository=todo_repository, unitOfWork=unit_of_work))
-# events_mediator.register(GetTodoItemByIdEvent, GetTodoItemByIdEventHandler(repository=todo_repository, unitOfWork=unit_of_work))
-# events_mediator.register(ListTodoItemsEvent, ListTodoItemsEventHandler(repository=todo_repository, unitOfWork=unit_of_work))
-
-
-
-
 db_load_balancer = LoadBalancer()
 
 for idx, url in enumerate(DATABASE_URLS):
