@@ -1,8 +1,5 @@
 .PHONY:
-	start
-
-start:
-	python loadbalancer/manage.py runserver
+	postgres down ubuild ustart
 
 postgres:
 	docker run --name postgres-lb1  -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=todo -p 5432:5432 -d postgres:latest

@@ -7,6 +7,7 @@ from ..database import DatabaseWrapper
 from .abstractions import ReadRepositoryInterface, WriteRepositoryInterface
 from ..models.todo_item import TodoItem
 
+
 class DefaultReadRepository(ReadRepositoryInterface):
     def __init__(self, dbw: DatabaseWrapper):
         self.db_wrapper = dbw

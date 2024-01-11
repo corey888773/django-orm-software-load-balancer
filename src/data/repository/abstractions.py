@@ -46,5 +46,5 @@ class UnitOfWorkInterface(metaclass=abc.ABCMeta):
 
 class LoadBalancingStrategyInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    async def choose(self, servers: list[DatabaseWrapper]) -> DatabaseWrapper:
+    async def choose(self, databases: list[DatabaseWrapper]) -> DatabaseWrapper:
         raise NotImplementedError

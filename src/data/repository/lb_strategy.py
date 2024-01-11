@@ -29,3 +29,4 @@ class RandomStrategy(LoadBalancingStrategyInterface):
                 servers.pop(index)
 
         return server
+

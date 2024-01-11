@@ -42,7 +42,7 @@ class DatabaseWrapper:
     async def is_connected(self):
         try:
             with self.engine.connect() as conn:
-                conn.execute(text('select 1'))
+                conn.execute(text('select 1')) 
             print(f'Database {self.id} is connected')
         except Exception as e:
             print(f'Database {self.id} is not connected')
@@ -55,7 +55,7 @@ class DatabaseWrapper:
     async def commit_events(self):
         while not self.is_synced():
             try:
-                event = self.event_queue.pop(0)
+                event = self.event_queue.pop(0) # FIFO
                 result = await self.events_dispatcher.handle(event)
                 print(f'Event {event} published with result {result.__dict__}')
 

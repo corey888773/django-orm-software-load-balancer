@@ -4,6 +4,7 @@ from ..repository.abstractions import ReadRepositoryInterface, WriteRepositoryIn
 class EventInterface(metaclass=abc.ABCMeta):
     pass
 
+
 class EventHandlerInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     async def handle(self, event: EventInterface):
