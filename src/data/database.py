@@ -33,7 +33,7 @@ class DatabaseWrapper:
     def register_event(self, event):
         self.event_queue.append(event)
 
-    def is_connected(self):
+    async def is_connected(self):
         try:
             with self.engine.connect() as conn:
                 conn.execute(text('select 1'))
@@ -46,12 +46,12 @@ class DatabaseWrapper:
     def is_synced(self):
         return len(self.event_queue) == 0
 
-    def commit_events(self):
+    async def commit_events(self):
         while not self.is_synced():
             try:
                 event = self.event_queue.pop(0)
                 print(f'Publishing event {event}')
-                self.events_mediator.handle(event)
+                await self.events_mediator.handle(event)
                 print(f'Event {event} published')
             except Exception as e:
                 print(f'Error publishing event {e}')

@@ -30,13 +30,9 @@ class CreateTodoItemCommandHandler(CommandHandlerInterface):
         self.repository = repository
         # self.unitOfWork = unitOfWork
 
-    def handle(self, command : CreateTodoItemCommand):
+    async def handle(self, command : CreateTodoItemCommand):
         _todo_item = TodoItemSchema(title=command.title, description=command.description, completed=command.completed)
-        try:
-            self.repository.create_todo_item(_todo_item)
-            print('command handler: create todo item')
-        except Exception as e:
-            print(e)
+        await self.repository.create_todo_item(_todo_item)
         return _todo_item
 
 
@@ -45,18 +41,19 @@ class UpdateTodoItemCommandHandler(CommandHandlerInterface):
         self.repository = repository
         # self.unitOfWork = unitOfWork
 
-    def handle(self, command : UpdateTodoItemCommand):
+    async def handle(self, command : UpdateTodoItemCommand):
         _todo_item = TodoItemSchema(id=command.id, title=command.title, description=command.description, completed=command.completed)
-        self.repository.update_todo_item(id=command.id, todo_item=_todo_item)
+        await self.repository.update_todo_item(id=command.id, todo_item=_todo_item)
         return _todo_item
+
 
 class DeleteTodoItemCommandHandler(CommandHandlerInterface):
     def __init__(self, repository: WriteRepositoryInterface, unitOfWork: UnitOfWorkInterface):
         self.repository = repository
         # self.unitOfWork = unitOfWork
 
-    def handle(self, command : DeleteTodoItemCommand):
-        self.repository.delete_todo_item(command.id)
+    async def handle(self, command : DeleteTodoItemCommand):
+        await self.repository.delete_todo_item(command.id)
         return ""
 
 
@@ -68,6 +65,6 @@ class CommandsMediator:
     def register(self, command: CommandInterface, handler: CommandHandlerInterface):
         self.handlers[command] = handler
 
-    def execute(self, command: CommandInterface):
-        return self.handlers[command.__class__].handle(command)
+    async def execute(self, command: CommandInterface):
+        return await self.handlers[command.__class__].handle(command)
 

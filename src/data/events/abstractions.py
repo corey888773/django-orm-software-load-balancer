@@ -7,5 +7,5 @@ class EventInterface(metaclass=abc.ABCMeta):
 
 class EventHandlerInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def handle(self, event: EventInterface):
+    async def handle(self, event: EventInterface):
         raise NotImplementedError

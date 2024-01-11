@@ -8,7 +8,7 @@ class CommandInterface(metaclass=abc.ABCMeta):
 
 class CommandHandlerInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def handle(self, command: CommandInterface):
+    async def handle(self, command: CommandInterface):
         raise NotImplementedError
 
 
@@ -17,5 +17,5 @@ class QueryInterface(metaclass=abc.ABCMeta):
 
 class QueryHandlerInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def handle(self, query: QueryInterface):
+    async def handle(self, query: QueryInterface):
         raise NotImplementedError

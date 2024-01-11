@@ -36,9 +36,9 @@ class TodoItemCreatedEventHandler(EventHandlerInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork
 
-    def handle(self, event : TodoItemCreatedEvent):
+    async def handle(self, event : TodoItemCreatedEvent):
         _todo_item = TodoItem(title=event.title, description=event.description, completed=event.completed)
-        self.repository.create_todo_item(_todo_item)
+        todo_item = await self.repository.create_todo_item(_todo_item)
         # self.unitOfWork.commit()
         return _todo_item
 
@@ -48,12 +48,12 @@ class TodoItemUpdatedEventHandler(EventHandlerInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork
 
-    def handle(self, event : TodoItemUpdatedEvent):
+    async def handle(self, event : TodoItemUpdatedEvent):
         _todo_item = self.repository.get_todo_item_by_id(event.id)
         _todo_item.title = event.title
         _todo_item.description = event.description
         _todo_item.completed = event.completed
-        self.repository.update_todo_item(_todo_item)
+        await self.repository.update_todo_item(_todo_item)
         # self.unitOfWork.commit()
         return _todo_item
 
@@ -63,9 +63,9 @@ class TodoItemDeletedEventHandler(EventHandlerInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork
 
-    def handle(self, event : TodoItemDeletedEvent):
+    async def handle(self, event : TodoItemDeletedEvent):
         _todo_item = self.repository.get_todo_item_by_id(event.id)
-        self.repository.delete_todo_item(_todo_item)
+        await self.repository.delete_todo_item(_todo_item)
         # self.unitOfWork.commit()
         return _todo_item
 
@@ -75,8 +75,8 @@ class GetTodoItemByIdEventHandler(EventHandlerInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork
 
-    def handle(self, event : GetTodoItemByIdEvent):
-        _todo_item = self.repository.get_todo_item_by_id(event.id)
+    async def handle(self, event : GetTodoItemByIdEvent):
+        _todo_item = await self.repository.get_todo_item_by_id(event.id)
         return _todo_item
 
 
@@ -85,8 +85,8 @@ class ListTodoItemsEventHandler(EventHandlerInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork
 
-    def handle(self, event : ListTodoItemsEvent):
-        _todo_items = self.repository.list_todo_items()
+    async def handle(self, event : ListTodoItemsEvent):
+        _todo_items = await self.repository.list_todo_items()
         return _todo_items
 
 
@@ -98,5 +98,5 @@ class EventsMediator:
     def register(self, event: EventInterface, event_handler: EventHandlerInterface):
         self.event_handlers[event] = event_handler
 
-    def handle(self, event: EventInterface):
-        return self.event_handlers[event.__class__].handle(event)
+    async def handle(self, event: EventInterface):
+        return await self.event_handlers[event.__class__].handle(event)

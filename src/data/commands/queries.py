@@ -14,15 +14,15 @@ class ListTodoItemsQueryHandler(QueryHandlerInterface):
     def __init__(self, repository: list[ReadRepositoryInterface]):
         self.repository = repository
 
-    def handle(self, query: QueryInterface):
-        return self.repository.list_todo_items()
+    async def handle(self, query: QueryInterface):
+        return await self.repository.list_todo_items()
 
 class GetTodoItemByIdQueryHandler(QueryHandlerInterface):
     def __init__(self, repository: list[ReadRepositoryInterface]):
         self.repository = repository
 
-    def handle(self, query: QueryInterface):
-        return self.repository.get_todo_item_by_id(query.id)
+    async def handle(self, query: QueryInterface):
+        return await self.repository.get_todo_item_by_id(query.id)
 
 # design pattern: mediator
 class QueriesMediator:
