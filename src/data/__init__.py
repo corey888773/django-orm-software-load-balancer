@@ -4,6 +4,18 @@ from . import models
 from .repository import TodoItemRepository
 from .database import DatabaseWrapper
 from .unitofwork import UnitOfWork
+from .events import *
+
+# events
+# events_mediator = EventsMediator()
+# events_mediator.register(TodoItemCreatedEvent, TodoItemCreatedEventHandler(repository=todo_repository, unitOfWork=unit_of_work))
+# events_mediator.register(TodoItemUpdatedEvent, TodoItemUpdatedEventHandler(repository=todo_repository, unitOfWork=unit_of_work))
+# events_mediator.register(TodoItemDeletedEvent, TodoItemDeletedEventHandler(repository=todo_repository, unitOfWork=unit_of_work))
+# events_mediator.register(GetTodoItemByIdEvent, GetTodoItemByIdEventHandler(repository=todo_repository, unitOfWork=unit_of_work))
+# events_mediator.register(ListTodoItemsEvent, ListTodoItemsEventHandler(repository=todo_repository, unitOfWork=unit_of_work))
+
+
+
 
 db_load_balancer = LoadBalancer()
 
@@ -13,10 +25,15 @@ for idx, url in enumerate(DATABASE_URLS):
     db_load_balancer.register(database)
 
 databases = db_load_balancer.get_dbs()
-todo_repository = [TodoItemRepository(dbw=dbw) for dbw in databases]
+todo_repositories = [TodoItemRepository(dbw=dbw) for dbw in databases]
+events_repositories = [EventsTodoItemRepository(dbw=dbw) for dbw in databases]
 unit_of_work = UnitOfWork(None)
+
+for dbw, repository in zip(databases, todo_repositories):
+    dbw.events_mediator = EventsMediatorFactory.create(repository=repository, unit_of_work=unit_of_work)
 
 __all__ = [
     'db_load_balancer',
-    'todo_repository'
+    'todo_repositories',
+    'unit_of_work'
 ]

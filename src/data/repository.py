@@ -5,7 +5,6 @@ import abc
 from sqlalchemy.orm.session import sessionmaker
 from .loadbalancer import LoadBalancer
 from .database import DatabaseWrapper
-from .events import *
 from .abstractions import TodoItemRepositoryInterface
 
 from .models.todo_item import TodoItem

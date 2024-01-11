@@ -1,6 +1,7 @@
 import abc
 from dataclasses import dataclass
-from .abstractions import TodoItemRepositoryInterface, UnitOfWorkInterface, EventInterface, EventHandlerInterface
+from .abstractions import EventInterface, EventHandlerInterface
+from ..abstractions import TodoItemRepositoryInterface, UnitOfWorkInterface
 
 
 @dataclass
@@ -22,6 +23,13 @@ class TodoItemUpdatedEvent(EventInterface):
 class TodoItemDeletedEvent(EventInterface):
     id: int
 
+@dataclass
+class GetTodoItemByIdEvent(EventInterface):
+    id: int
+
+@dataclass
+class ListTodoItemsEvent(EventInterface):
+    pass
 
 class TodoItemCreatedEventHandler(EventHandlerInterface):
     def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
@@ -60,6 +68,26 @@ class TodoItemDeletedEventHandler(EventHandlerInterface):
         self.repository.delete_todo_item(_todo_item)
         self.unitOfWork.commit()
         return _todo_item
+
+
+class GetTodoItemByIdEventHandler(EventHandlerInterface):
+    def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
+        self.repository = repository
+        self.unitOfWork = unitOfWork
+
+    def handle(self, event : GetTodoItemByIdEvent):
+        _todo_item = self.repository.get_todo_item_by_id(event.id)
+        return _todo_item
+
+
+class ListTodoItemsEventHandler(EventHandlerInterface):
+    def __init__(self, repository: TodoItemRepositoryInterface, unitOfWork: UnitOfWorkInterface):
+        self.repository = repository
+        self.unitOfWork = unitOfWork
+
+    def handle(self, event : ListTodoItemsEvent):
+        _todo_items = self.repository.list_todo_items()
+        return _todo_items
 
 
 # design pattern: mediator

@@ -4,14 +4,6 @@ from schemas import TodoItemSchema, RequestTodoItem, Response
 from typing import List, Type
 from .models.todo_item import TodoItem
 
-class EventInterface(metaclass=abc.ABCMeta):
-    pass
-
-class EventHandlerInterface(metaclass=abc.ABCMeta):
-    @abc.abstractmethod
-    def handle(self, event: EventInterface):
-        raise NotImplementedError
-
 class TodoItemRepositoryInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def list_todo_items(self, db: Session) -> list[Type[TodoItem]]:

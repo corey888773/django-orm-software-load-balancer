@@ -10,8 +10,16 @@ class DatabaseWrapper:
             'options': '-c statement_timeout=5000',            
         })
         self.sessionmaker = sessionmaker(bind=self.engine, autocommit=False, autoflush=False)
-        
         self.event_queue = []
+        self._events_mediator = None
+
+    @property
+    def events_mediator(self):
+        return self._events_mediator
+
+    @events_mediator.setter
+    def events_mediator(self, value):
+        self._events_mediator = value
 
     def migrate(self, model):
         model.Base.metadata.create_all(bind=self.engine)
@@ -27,6 +35,12 @@ class DatabaseWrapper:
 
     def is_connected(self):
         return self.engine.test_connection()
+
+    def is_synced(self):
+        return len(self.event_queue) == 0
+
+    def commit_events(self):
+        pass
 
     @contextmanager
     def make_session(self):

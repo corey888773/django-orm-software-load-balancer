@@ -5,7 +5,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from .config import Base
 from .database import DatabaseWrapper
 
-
 class LoadBalancer:
     def __init__(self):
         self.dbs: Dict[str, DatabaseWrapper] = {}
