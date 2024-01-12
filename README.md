@@ -1,4 +1,6 @@
-# Load balancer for databases implemented in Python with FastAPI and SQLAlchemy
+# Load balancer for databases 
+
+Implemented with Python with FastAPI and SQLAlchemy
 
 ## Preconditions
 - Docker
@@ -17,7 +19,7 @@
     ```
     - Otherwise, run
      ```bash
-        docker-compose up --build
+    docker-compose up --build
     ```
 4. Open `http://localhost:8000/docs` in your browser to see the API documentation.
 5. Use the API to interact with the database.    
@@ -35,7 +37,7 @@
     To get all todo items send a GET request to `http://localhost:8000/todo`.
 
 ## Basic Documentation
-### Class diagram:
+### Class relations diagram:
 ![Class diagram](./docs/class_diagram.jpg)
    
 ### Example Design Patterns:
@@ -45,3 +47,4 @@
 ![Repository](./docs/repository_pattern.jpg)
 #### Strategy
 ![Strategy](./docs/strategy_pattern.jpg)
+
