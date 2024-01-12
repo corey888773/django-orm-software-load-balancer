@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-01-12T19:14:39.027Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15" etag="DvqSXbOXYms_25NklYNm" version="22.1.18" type="github">
+<mxfile host="app.diagrams.net" modified="2024-01-12T19:55:55.449Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15" etag="k6bPDZ0VemLLQv7maLjI" version="22.1.18" type="github">
   <diagram name="Page-1" id="w4XBVZPcjY5224zy4fzG">
     <mxGraphModel dx="1853" dy="1794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -10,22 +10,22 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="-460" y="205" width="280" height="250" as="geometry" />
+          <mxGeometry x="-460" y="195" width="280" height="250" as="geometry" />
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="140" width="520" height="390" as="geometry" />
+          <mxGeometry x="40" y="180" width="520" height="300" as="geometry" />
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-6" value="&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br&gt;ReadRepositoryInterface" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-80" y="290" width="230" height="80" as="geometry" />
+          <mxGeometry x="-80" y="280" width="230" height="80" as="geometry" />
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-7" value="+ list_todo_items(): list[TodoItem]&lt;br&gt;+ get_todo_item_by_id(): TodoItem" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="7m4NU0onwaLhdayTmw-R-6">
           <mxGeometry y="40" width="230" height="40" as="geometry" />
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-11" value="Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
-          <mxGeometry x="660" y="272.5" width="90" height="125" as="geometry" />
+          <mxGeometry x="660" y="267.5" width="90" height="125" as="geometry" />
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-12" value="LoadBalancerReadRepository" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="210" y="200" width="320" height="100" as="geometry" />
+          <mxGeometry x="210" y="210" width="320" height="100" as="geometry" />
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-13" value="- database_wrappers: list[DatabaseWrapper]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="7m4NU0onwaLhdayTmw-R-12">
           <mxGeometry y="26" width="320" height="24" as="geometry" />
@@ -37,7 +37,7 @@
           <mxGeometry y="58" width="320" height="42" as="geometry" />
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-20" value="DefaultReadRepository" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="210" y="340" width="320" height="100" as="geometry" />
+          <mxGeometry x="210" y="345" width="320" height="100" as="geometry" />
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-21" value="- database_wrapper: DatabaseWrapper" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="7m4NU0onwaLhdayTmw-R-20">
           <mxGeometry y="26" width="320" height="24" as="geometry" />
@@ -55,13 +55,13 @@
           <mxGeometry x="-430" y="300" width="220" height="60" as="geometry" />
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-29" value="Application Layer" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="-460" y="175" width="280" height="30" as="geometry" />
+          <mxGeometry x="-460" y="165" width="280" height="30" as="geometry" />
         </mxCell>
         <mxCell id="7m4NU0onwaLhdayTmw-R-30" value="Repository Abstraction Layer" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="40" y="110" width="520" height="30" as="geometry" />
+          <mxGeometry x="40" y="150" width="520" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="7m4NU0onwaLhdayTmw-R-31" value="&lt;h1&gt;Repository pattern&lt;/h1&gt;&lt;div&gt;- In the repository pattern application treats Data Layer as a &quot;Black box&quot;.&lt;/div&gt;&lt;div&gt;- We can change the way we get the data without changing the application code.&lt;/div&gt;&lt;div&gt;- We can use different datasources without changing the application code.&lt;/div&gt;&lt;div&gt;- We can extract this repository logic to different applications&lt;/div&gt;&lt;div&gt;- We can switch between different approaches with ease.&lt;/div&gt;&lt;div&gt;- In this specific project we have used this pattern to implement the load balancing logic&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="-310" y="-50" width="450" height="150" as="geometry" />
+        <mxCell id="7m4NU0onwaLhdayTmw-R-31" value="&lt;h1&gt;Repository pattern&lt;/h1&gt;&lt;div&gt;- In the repository pattern application treats Data Layer as a &quot;Black box&quot;.&lt;/div&gt;&lt;div&gt;- We can change the way we get the data without changing the application code.&lt;/div&gt;&lt;div&gt;- We can use different datasources without changing the application code.&lt;/div&gt;&lt;div&gt;- We can extract this repository logic to different applications&lt;/div&gt;&lt;div&gt;- We can switch between different approaches with ease.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;In this specific project we have used this pattern to implement the load balancing logic.&amp;nbsp;&lt;/div&gt;&lt;div&gt;We use the fact that in the abstraction layer we can do anything with the requests provided by the application, hence we spread them across multiple db&#39;s.&amp;nbsp;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-250" y="-20" width="520" height="190" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
