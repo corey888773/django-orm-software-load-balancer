@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-01-12T17:25:10.986Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15" etag="2IZX5LEJa2yzVqsx-qhP" version="22.1.18" type="github">
+<mxfile host="app.diagrams.net" modified="2024-01-12T17:27:35.695Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15" etag="Qp8-k8jz3_hFHz7TblCZ" version="22.1.18" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2261" dy="802" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -26,8 +26,21 @@
         <mxCell id="99IpTOKlGNFrOxJhFEqu-4" value="+&amp;nbsp;create_todo_item(request: RequestTodoItem): httpResponse&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;/span&gt;+&amp;nbsp;list_todo_items(): httpResponse&lt;br&gt;+ update_todo_item(id: int, request RequestTodoItem): httpResponse&lt;br&gt;+ get_todo_item_by_id(id: int) : httpResponse&lt;br&gt;+ delete_todo_item(id: int) : httpResponse" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="99IpTOKlGNFrOxJhFEqu-1">
           <mxGeometry y="26" width="380" height="84" as="geometry" />
         </mxCell>
-        <mxCell id="99IpTOKlGNFrOxJhFEqu-190" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;fontColor=default;startSize=26;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="99IpTOKlGNFrOxJhFEqu-5" target="99IpTOKlGNFrOxJhFEqu-9">
+        <mxCell id="99IpTOKlGNFrOxJhFEqu-190" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;fontColor=default;startSize=26;dashed=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="99IpTOKlGNFrOxJhFEqu-5" target="99IpTOKlGNFrOxJhFEqu-9">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="99IpTOKlGNFrOxJhFEqu-199" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;fontColor=default;startSize=26;dashed=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="99IpTOKlGNFrOxJhFEqu-5" target="99IpTOKlGNFrOxJhFEqu-136">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="10" y="299" />
+              <mxPoint x="10" y="210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="99IpTOKlGNFrOxJhFEqu-201" value="depends" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontFamily=Helvetica;fontColor=default;" vertex="1" connectable="0" parent="99IpTOKlGNFrOxJhFEqu-199">
+          <mxGeometry x="-0.6503" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="99IpTOKlGNFrOxJhFEqu-5" value="CommandInvoker" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="54" y="244" width="360" height="110" as="geometry" />
@@ -185,8 +198,16 @@
         <mxCell id="99IpTOKlGNFrOxJhFEqu-44" value="+ handle(command: QueryInterface): any" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="99IpTOKlGNFrOxJhFEqu-41">
           <mxGeometry y="58" width="260" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="99IpTOKlGNFrOxJhFEqu-169" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="99IpTOKlGNFrOxJhFEqu-45" target="99IpTOKlGNFrOxJhFEqu-50">
+        <mxCell id="99IpTOKlGNFrOxJhFEqu-169" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="99IpTOKlGNFrOxJhFEqu-45" target="99IpTOKlGNFrOxJhFEqu-50">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="99IpTOKlGNFrOxJhFEqu-198" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Helvetica;fontSize=12;fontColor=default;startSize=26;dashed=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="99IpTOKlGNFrOxJhFEqu-45" target="99IpTOKlGNFrOxJhFEqu-135">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="99IpTOKlGNFrOxJhFEqu-200" value="depends" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontFamily=Helvetica;fontColor=default;" vertex="1" connectable="0" parent="99IpTOKlGNFrOxJhFEqu-198">
+          <mxGeometry x="-0.6175" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="99IpTOKlGNFrOxJhFEqu-45" value="QueryInvoker" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="460" y="244" width="360" height="110" as="geometry" />
