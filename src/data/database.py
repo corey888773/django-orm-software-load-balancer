@@ -43,9 +43,9 @@ class DatabaseWrapper:
         try:
             with self.engine.connect() as conn:
                 conn.execute(text('select 1')) 
-            print(f'Database {self.id} is connected')
+            self.id_print('Connected')
         except Exception as e:
-            print(f'Database {self.id} is not connected')
+            self.id_print('Not Connected')
             return False
         return True
 
@@ -55,13 +55,17 @@ class DatabaseWrapper:
     async def commit_events(self):
         while not self.is_synced():
             try:
-                event = self.event_queue.pop(0) # FIFO
+                event = self.event_queue.pop(0) # FIFO 
                 result = await self.events_dispatcher.handle(event)
-                print(f'Event {event} published with result {result.__dict__}')
+                if result is None or isinstance(result, Exception):
+                    self.id_print(f'Handled event: {event} - somethin went wrong: {result}')
+                else:
+                    self.id_print(f'Handled event: {event} - with result: {result.__dict__}')
 
                 # there might be a better way to handle errors like for example retrying, catching specific errors, etc.
             except Exception as ex:  
-                print(f'Error publishing event {ex}')
+                self.id_print(f'Error publishing event {ex}')
                 break
 
-
+    def id_print(self, *args, **kwargs):
+        print(f'Database {self.id}: ', *args, **kwargs)

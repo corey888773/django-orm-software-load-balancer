@@ -37,7 +37,7 @@ class CreateTodoItemCommandHandler(CommandHandlerInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork # Not implemented
 
-    async def handle(self, command : CreateTodoItemCommand):
+    async def handle(self, command : CommandInterface):
         _todo_item = TodoItemSchema(title=command.title, description=command.description, completed=command.completed)
         await self.repository.create_todo_item(_todo_item)
         return _todo_item
@@ -50,7 +50,7 @@ class UpdateTodoItemCommandHandler(CommandHandlerInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork # Not implemented
 
-    async def handle(self, command : UpdateTodoItemCommand):
+    async def handle(self, command : CommandInterface):
         _todo_item = TodoItemSchema(id=command.id, title=command.title, description=command.description, completed=command.completed)
         await self.repository.update_todo_item(id=command.id, todo_item=_todo_item)
         return _todo_item
@@ -63,7 +63,7 @@ class DeleteTodoItemCommandHandler(CommandHandlerInterface):
         self.repository = repository
         self.unitOfWork = unitOfWork # Not implemented
 
-    async def handle(self, command : DeleteTodoItemCommand):
+    async def handle(self, command : CommandInterface):
         await self.repository.delete_todo_item(command.id)
         return ""
 

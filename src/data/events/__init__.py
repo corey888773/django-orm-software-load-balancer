@@ -1,2 +1,2 @@
 from .events import *
-from .events_mediator_factory import EventsDispatcherFactory
+from .events_dispatcher_factory import EventsDispatcherFactory

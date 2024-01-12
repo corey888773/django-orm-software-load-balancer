@@ -9,17 +9,17 @@ import asyncio
 
 class LoadBalancerReadRepository(ReadRepositoryInterface):
     def __init__(self, dbws: list[DatabaseWrapper], default_strategy: LoadBalancingStrategyInterface=RoundRobinStrategy()):
-        self.db_wrapper = {dbw.get_id(): dbw for dbw in dbws}
+        self.db_wrappers = {dbw.get_id(): dbw for dbw in dbws}
         self.strategy = default_strategy
 
     async def list_todo_items(self) -> list[TodoItem]:
-        dbw = await self.strategy.choose(list(self.db_wrapper.values()))
+        dbw = await self.strategy.choose(list(self.db_wrappers.values()))
         await dbw.commit_events()
         with dbw.make_session() as db:
             return db.query(TodoItem).all()
 
     async def get_todo_item_by_id(self, id: int) -> TodoItem:
-        dbw = await self.strategy.choose(list(self.db_wrapper.values()))
+        dbw = await self.strategy.choose(list(self.db_wrappers.values()))
         await dbw.commit_events()
         with dbw.make_session() as db:
             return db.query(TodoItem).filter(TodoItem.id == id).first()
@@ -27,7 +27,7 @@ class LoadBalancerReadRepository(ReadRepositoryInterface):
 
 class LoadBalancerWriteRepository(WriteRepositoryInterface):
     def __init__(self, dbws: list[DatabaseWrapper]):
-        self.db_wrapper = {dbw.get_id(): dbw for dbw in dbws}
+        self.db_wrappers = {dbw.get_id(): dbw for dbw in dbws}
 
     async def create_todo_item(self, todo_item: TodoItemSchema) -> TodoItem:
         event = TodoItemCreatedEvent(title=todo_item.title, description=todo_item.description, completed=todo_item.completed)
@@ -47,7 +47,7 @@ class LoadBalancerWriteRepository(WriteRepositoryInterface):
                 await dbw.commit_events()
 
         tasks = []
-        for _, dbw in self.db_wrapper.items():
+        for _, dbw in self.db_wrappers.items():
             dbw.register_event(event)
             tasks.append(commit_events(dbw))
 
